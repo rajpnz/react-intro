@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+The instructions were followed from [How to deploy React App](https://hackernoon.com/how-to-deploy-a-react-app-to-github-pages).
+
 ## Available Scripts
 
 In the project directory, you can run:
