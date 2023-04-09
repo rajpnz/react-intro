@@ -9,9 +9,30 @@ function Counter() {
         setCount(count + 1);
     }
 
+    function countAsText() {
+        let text;
+        switch (count) {
+            case 1:
+                text = "one"
+                break;
+            case 2:
+                text = "two"
+                break;
+            case 3:
+                text = "three"
+                break;
+            case 4:
+                text = "four"
+                break;
+            default:
+                text = count
+        }
+        return text
+    }
+
     return (
         <div>
-            <p>You clicked {count} times</p>
+            <p>You clicked {countAsText()} times</p>
             <button onClick={increment}>
                 Click me
             </button>
