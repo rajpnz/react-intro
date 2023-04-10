@@ -5,28 +5,28 @@ function TransportSelector() {
     const [mode, setMode] = useState("");
 
     return (
-        <div>
+        <div className="transport-selector">
             <form>
                 <label htmlFor="mode">
                     Type of Transport
-                    <select
-                        id="mode"
-                        value={mode}
-                        onChange={(e) => {
-                            setMode(e.target.value);
-                        }}
-                        onBlur={(e) => {
-                            setMode(e.target.value);
-                        }}
-                    >
-                        <option />
-                        {MODES.map((oneMode) => (
-                            <option key={oneMode} value={oneMode}>
-                                {oneMode}
-                            </option>
-                        ))}
-                    </select>
                 </label>
+                <select
+                    id="mode"
+                    value={mode}
+                    onChange={(e) => {
+                        setMode(e.target.value);
+                    }}
+                    onBlur={(e) => {
+                        setMode(e.target.value);
+                    }}
+                >
+                    <option />
+                    {MODES.map((oneMode) => (
+                        <option key={oneMode} value={oneMode}>
+                            {oneMode}
+                        </option>
+                    ))}
+                </select>
             </form>
         </div>
     );

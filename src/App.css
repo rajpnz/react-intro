@@ -6,6 +6,10 @@ div {
   margin-bottom: 20px;
 }
 
+.transport-selector label {
+  padding-right: 10px;
+}
+
 .App-logo {
   height: 20vmin;
   pointer-events: none;
