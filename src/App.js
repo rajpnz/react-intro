@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Counter from './counter/Counter'
+import TransportSelector from "./public-transport/TransportSelector";
 
 function App() {
   return (
@@ -16,8 +17,11 @@ function App() {
           Learn React
         </a>
       </header>
-        <div className="App">
+        <div>
             <Counter />
+        </div>
+        <div>
+            <TransportSelector />
         </div>
     </div>
   );
