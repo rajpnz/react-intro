@@ -17,6 +17,21 @@ function TransportSelector() {
         }
     }
 
+    async function requestStopDeparturePredictions(event) {
+        const selectedIndex = event.target.options.selectedIndex;
+        const stopId = event.target.options[selectedIndex].getAttribute('data-key');
+        const headers = new Headers();
+        headers.append('accept', 'application/json');
+        headers.append('x-api-key', 'my-secret-key');
+        const res = await fetch(
+            `https://api.opendata.metlink.org.nz/v1/stop-predictions?stop_id=${stopId}`, {
+                method: 'GET',
+                headers: headers,
+            }
+        );
+        const json = await res.json();
+        console.log(json)
+    }
     return (
         <div className="transport-selector">
             <form>
@@ -47,13 +62,14 @@ function TransportSelector() {
                 <select
                     disabled={!stops.length}
                     id="stop"
-                    value={stop}
-                    onChange={(e) => setStop(e.target.value)}
-                    onBlur={(e) => setStop(e.target.value)}
+                    onChange={(e) =>{
+                        setStop(e.target.value)
+                        requestStopDeparturePredictions(e);
+                }}
                 >
                     {stops.map((oneStop) =>
                         (
-                        <option key={oneStop.stop_id} value={oneStop.name}>
+                        <option key={oneStop.stop_id} data-key={oneStop.stop_id} value={oneStop.name}>
                             {`${oneStop.name} - (${oneStop.stop_id})`}
                         </option>
                     ))}
