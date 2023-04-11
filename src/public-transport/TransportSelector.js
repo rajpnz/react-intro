@@ -1,8 +1,8 @@
 import {useState} from "react";
 const MODES = ["Train", "Bus"];
-const TRAIN_STOPS = [{stop_id: 1, name: "Johnsonville"}, {stop_id: 2, name: "Raroa"}, {stop_id: 3, name: "Wellington"}]
-const BUS_STOPS = [{stop_id: 4, name: "Johnsonville Mall"}, {stop_id: 3252, name: "BP Johnsonville"},
-    {stop_id: 5502, name: "Lambton Quay"}, {stop_id: 5, name: "Wellington Station"}]
+const TRAIN_STOPS = [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "2", name: "Raroa"}, {stop_id: "3", name: "Wellington"}]
+const BUS_STOPS = [{stop_id: "4", name: "Johnsonville Mall"}, {stop_id: "3252", name: "BP Johnsonville"},
+    {stop_id: "5502", name: "Lambton Quay"}, {stop_id: "5", name: "Wellington Station"}]
 
 function TransportSelector() {
     const [mode, setMode] = useState("");
