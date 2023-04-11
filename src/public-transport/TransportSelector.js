@@ -54,7 +54,7 @@ function TransportSelector() {
                     {stops.map((oneStop) =>
                         (
                         <option key={oneStop.stop_id} value={oneStop.name}>
-                            {oneStop.name}
+                            {`${oneStop.name} - (${oneStop.stop_id})`}
                         </option>
                     ))}
                 </select>
