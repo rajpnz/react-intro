@@ -7,7 +7,12 @@ div {
 }
 
 .transport-selector label {
-  padding-right: 10px;
+  display: inline-block;
+  width: 150px;
+  text-align: left;
+}
+.transport-selector select {
+  width: 150px;
 }
 
 .App-logo {
