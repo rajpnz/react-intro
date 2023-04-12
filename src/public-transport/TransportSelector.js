@@ -5,6 +5,7 @@ const BUS_STOPS = [{stop_id: "3081", name: "Johnsonville Mall"}, {stop_id: "3252
     {stop_id: "5012", name: "Lambton Central - Stop A"}, {stop_id: "5016", name: "Wellington Station - Stop E"}]
 
 function TransportSelector() {
+    const [apiKey, setApiKey] = useState("");
     const [mode, setMode] = useState("");
     const [stop, setStop] = useState("");
     const [stops, setStops] = useState([]);
@@ -22,7 +23,7 @@ function TransportSelector() {
         const stopId = event.target.options[selectedIndex].getAttribute('data-key');
         const headers = new Headers();
         headers.append('accept', 'application/json');
-        headers.append('x-api-key', 'my-secret-key');
+        headers.append('x-api-key', apiKey);
         const res = await fetch(
             `https://api.opendata.metlink.org.nz/v1/stop-predictions?stop_id=${stopId}`, {
                 method: 'GET',
@@ -35,6 +36,15 @@ function TransportSelector() {
     return (
         <div className="transport-selector">
             <form>
+                <label htmlFor="api-key">
+                    Metlink API Key
+                </label>
+                <input
+                    id="api-key"
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                />
+                <br/>
                 <label htmlFor="mode">
                     Type of Transport
                 </label>

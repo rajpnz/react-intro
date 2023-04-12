@@ -11,8 +11,11 @@ div {
   width: 150px;
   text-align: left;
 }
-.transport-selector select {
-  width: 250px;
+
+.transport-selector select,
+.transport-selector input {
+  width: 350px;
+  box-sizing:border-box;
 }
 
 .App-logo {
