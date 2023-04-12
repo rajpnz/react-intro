@@ -41,6 +41,7 @@ function TransportSelector() {
                 </label>
                 <input
                     id="api-key"
+                    type="password"
                     value={apiKey}
                     onChange={(e) => setApiKey(e.target.value)}
                 />
