@@ -7,7 +7,7 @@ const BUS_STOPS = [{stop_id: "3081", name: "Johnsonville Mall"}, {stop_id: "3252
 function TransportSelector() {
     const [apiKey, setApiKey] = useState("");
     const [mode, setMode] = useState("");
-    const [stop, setStop] = useState("");
+    const [, setStop] = useState("");
     const [stops, setStops] = useState([]);
 
     function setUpStops(typeOfTransport){
