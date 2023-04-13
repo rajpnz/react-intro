@@ -5,6 +5,8 @@ const BUS_STOPS = [{stop_id: "3081", name: "Johnsonville Mall"}, {stop_id: "3252
     {stop_id: "5012", name: "Lambton Central - Stop A"}, {stop_id: "5016", name: "Wellington Station - Stop E"}]
 
 function TransportSelector() {
+
+    const [departures, setDepartures] = useState("");
     const [apiKey, setApiKey] = useState("");
     const [mode, setMode] = useState("");
     const [, setStop] = useState("");
@@ -31,8 +33,10 @@ function TransportSelector() {
             }
         );
         const json = await res.json();
+        setDepartures(json.departures)
         console.log(json)
     }
+
     return (
         <div className="transport-selector">
             <form>
@@ -86,6 +90,12 @@ function TransportSelector() {
                     ))}
                 </select>
             </form>
+            <br/>
+            {departures.map((departure) => (
+                <div>
+                    <span>{`${departure.service_id} ---- ${departure.status} ----- ${departure.destination.name} ---- ${departure.departure.expected}`}</span>
+                </div>
+            ))}
         </div>
     );
 }
