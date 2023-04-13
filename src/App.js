@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import './App.css';
-import Counter from './counter/Counter'
 import TransportSelector from "./public-transport/TransportSelector";
 
 function App() {
@@ -9,9 +8,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
       </header>
-        <div>
-            <Counter />
-        </div>
+        <div></div>
         <div>
             <TransportSelector />
         </div>
