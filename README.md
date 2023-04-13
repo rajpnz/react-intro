@@ -4,6 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 The instructions were followed from [How to deploy React App](https://hackernoon.com/how-to-deploy-a-react-app-to-github-pages).
 
+## Pre-requisites
+You will need to enter a Metlink api-key in the UI so calls can be made to the Metlink APIs. 
+The api-key can be created at the [Metlink Developer Portal](https://opendata.metlink.org.nz/)
+
 ## Available Scripts
 
 In the project directory, you can run:
