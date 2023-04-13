@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 const MODES = ["Train", "Bus"];
 const TRAIN_STOPS = [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", name: "Raroa"}, {stop_id: "WELL", name: "Wellington"}]
 const BUS_STOPS = [{stop_id: "3081", name: "Johnsonville Mall"}, {stop_id: "3252", name: "BP Johnsonville"},
@@ -9,20 +9,34 @@ function TransportSelector() {
     const [departures, setDepartures] = useState();
     const [apiKey, setApiKey] = useState("");
     const [mode, setMode] = useState("");
-    const [, setStop] = useState("");
+    const [stop, setStop] = useState("");
     const [stops, setStops] = useState([]);
+    const [stopId, setStopId] = useState("");
+
+    useEffect(() => {
+        requestStopDeparturePredictions();
+    }, [stopId, mode])
 
     function setUpStops(typeOfTransport){
+        let stopsFromTransport;
         if (typeOfTransport === "Train") {
-            setStops(TRAIN_STOPS);
+            stopsFromTransport = TRAIN_STOPS;
         } else if (typeOfTransport === "Bus") {
-            setStops(BUS_STOPS)
+            stopsFromTransport = BUS_STOPS;
         }
+        setStops(stopsFromTransport);
+        // arbitrarily pre-select the 2nd stop
+        const stopToSelect = stopsFromTransport[1];
+        setStopId(stopToSelect.stop_id);
+        setStop(stopToSelect.name)
     }
 
-    async function requestStopDeparturePredictions(event) {
+    function setStopIdFromEvent(event) {
         const selectedIndex = event.target.options.selectedIndex;
-        const stopId = event.target.options[selectedIndex].getAttribute('data-key');
+        const stopIdFromEvent= event.target.options[selectedIndex].getAttribute('data-key');
+        setStopId(stopIdFromEvent)
+    }
+    async function requestStopDeparturePredictions() {
         const headers = new Headers();
         headers.append('accept', 'application/json');
         headers.append('x-api-key', apiKey);
@@ -59,9 +73,6 @@ function TransportSelector() {
                         setMode(e.target.value);
                         setUpStops(e.target.value);
                     }}
-                    onBlur={(e) => {
-                        setMode(e.target.value);
-                    }}
                 >
                     {MODES.map((oneMode) => (
                         <option key={oneMode} value={oneMode}>
@@ -76,9 +87,10 @@ function TransportSelector() {
                 <select
                     disabled={!stops.length}
                     id="stop"
+                    value={stop}
                     onChange={(e) =>{
                         setStop(e.target.value)
-                        requestStopDeparturePredictions(e);
+                        setStopIdFromEvent(e);
                 }}
                 >
                     {stops.map((oneStop) =>
