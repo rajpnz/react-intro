@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import StopDepartures from "./StopDepartures";
 const MODES = ["Train", "Bus"];
 const TRAIN_STOPS = [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", name: "Raroa"}, {stop_id: "WELL", name: "Wellington"}]
 const BUS_STOPS = [{stop_id: "3081", name: "Johnsonville Mall"}, {stop_id: "3252", name: "BP Johnsonville"},
@@ -104,24 +105,9 @@ function TransportSelector() {
                 </select>
             </form>
             <br/>
-            <div>
-                <table>
-                    <tr>
-                        <th>Service ID</th>
-                        <th>Status</th>
-                        <th>Destination</th>
-                        <th>Expected Departure</th>
-                    </tr>
-                    {departures?.map((departure) => (
-                        <tr>
-                            <td>{departure.service_id}</td>
-                            <td>{departure.status}</td>
-                            <td>{departure.destination.name}</td>
-                            <td>{departure.departure.expected}</td>
-                        </tr>
-                    ))}
-                </table>
-            </div>
+            <StopDepartures
+                stopDepartures={departures}
+            />
         </div>
     );
 }
