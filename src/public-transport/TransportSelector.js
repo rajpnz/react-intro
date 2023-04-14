@@ -14,7 +14,9 @@ function TransportSelector() {
     const [stopId, setStopId] = useState("");
 
     useEffect(() => {
-        requestStopDeparturePredictions();
+        if(apiKey && mode && stopId) {
+            requestStopDeparturePredictions();
+        }
     }, [stopId, mode])
 
     function setUpStops(typeOfTransport){
