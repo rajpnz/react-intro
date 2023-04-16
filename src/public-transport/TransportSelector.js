@@ -105,9 +105,11 @@ function TransportSelector() {
                 </select>
             </form>
             <br/>
-            <StopDepartures
+            {departures != undefined && departures.length > 0 ? (
+                <StopDepartures
                 stopDepartures={departures}
-            />
+                />
+            ) : (<span></span>)}
         </div>
     );
 }
