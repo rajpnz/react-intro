@@ -1,14 +1,6 @@
+import {TIME_FORMATTER} from "../common/DateUtils";
 const StopDepartures = (props) => {
 
-    function formatTime(isoDateTimeString) {
-        let formattedTime = "Unknown";
-        if(isoDateTimeString) {
-            const time = new Date(isoDateTimeString);
-            const timeOptions = {hour: 'numeric', minute: 'numeric', hour12: true};
-            formattedTime = time.toLocaleString('en-NZ', timeOptions)
-        }
-        return formattedTime;
-    }
     return (
         <div>
             <table>
@@ -24,7 +16,7 @@ const StopDepartures = (props) => {
                         <td>{departure.service_id}</td>
                         <td>{departure.status}</td>
                         <td>{departure.destination.name}</td>
-                        <td>{formatTime(departure.departure.expected)}</td>
+                        <td>{TIME_FORMATTER(departure.departure.expected)}</td>
                     </tr>
                 )})}
             </table>
