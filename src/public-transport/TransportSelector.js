@@ -1,5 +1,8 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import StopDepartures from "./StopDepartures";
+import { useQuery } from "@tanstack/react-query";
+import fetchStopPredictions from "./FetchStopPredictions";
+
 const MODES = ["Train", "Bus"];
 const TRAIN_STOPS = [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", name: "Raroa"}, {stop_id: "WELL", name: "Wellington"}]
 const BUS_STOPS = [{stop_id: "3081", name: "Johnsonville Mall"}, {stop_id: "3252", name: "BP Johnsonville"},
@@ -19,12 +22,14 @@ function TransportSelector() {
         setMode(defaultMode)
         setUpStops(defaultMode)
     }
+    const { isLoading, error, data } = useQuery(['stop-predictions', stopId, mode, apiKey],
+        fetchStopPredictions , {
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        staleTime: 20000,
+        onSuccess: (data) => {setDepartures(data)}
+    });
 
-    useEffect(() => {
-        if(apiKey && mode && stopId) {
-            requestStopDeparturePredictions();
-        }
-    }, [stopId, mode, apiKey])
 
     function setUpStops(typeOfTransport){
         let stopsFromTransport;
@@ -44,19 +49,6 @@ function TransportSelector() {
         const selectedIndex = event.target.options.selectedIndex;
         const stopIdFromEvent= event.target.options[selectedIndex].getAttribute('data-key');
         setStopId(stopIdFromEvent)
-    }
-    async function requestStopDeparturePredictions() {
-        const headers = new Headers();
-        headers.append('accept', 'application/json');
-        headers.append('x-api-key', apiKey);
-        const res = await fetch(
-            `https://api.opendata.metlink.org.nz/v1/stop-predictions?stop_id=${stopId}`, {
-                method: 'GET',
-                headers: headers,
-            }
-        );
-        const json = await res.json();
-        setDepartures(json.departures)
     }
 
     return (
