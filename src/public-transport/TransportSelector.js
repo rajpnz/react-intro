@@ -22,7 +22,7 @@ function TransportSelector() {
         setMode(defaultMode)
         setUpStops(defaultMode)
     }
-    const { isLoading, error, data } = useQuery(['stop-predictions', stopId, mode, apiKey],
+    const { isLoading, error} = useQuery(['stop-predictions', stopId, mode, apiKey],
         fetchStopPredictions , {
         refetchOnMount: false,
         refetchOnWindowFocus: false,
@@ -49,6 +49,16 @@ function TransportSelector() {
         const selectedIndex = event.target.options.selectedIndex;
         const stopIdFromEvent= event.target.options[selectedIndex].getAttribute('data-key');
         setStopId(stopIdFromEvent)
+    }
+
+    function showQueryResults() {
+        if(isLoading) {
+            return <span>Loading......</span>;
+        } else if (error) {
+            return <span>{`Error: ${error.message}`}</span>;
+        } else if (departures != undefined && departures.length > 0) {
+            return <StopDepartures stopDepartures={departures}/>;
+        }
     }
 
     return (
@@ -103,11 +113,7 @@ function TransportSelector() {
                 </select>
             </form>
             <br/>
-            {departures != undefined && departures.length > 0 ? (
-                <StopDepartures
-                stopDepartures={departures}
-                />
-            ) : (<span></span>)}
+            {showQueryResults()}
         </div>
     );
 }
