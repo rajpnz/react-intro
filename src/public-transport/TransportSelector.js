@@ -14,6 +14,12 @@ function TransportSelector() {
     const [stops, setStops] = useState([]);
     const [stopId, setStopId] = useState("");
 
+    if(!mode) {
+        const defaultMode = MODES[1];
+        setMode(defaultMode)
+        setUpStops(defaultMode)
+    }
+
     useEffect(() => {
         if(apiKey && mode && stopId) {
             requestStopDeparturePredictions();
@@ -28,8 +34,8 @@ function TransportSelector() {
             stopsFromTransport = BUS_STOPS;
         }
         setStops(stopsFromTransport);
-        // arbitrarily pre-select the 2nd stop
-        const stopToSelect = stopsFromTransport[1];
+        // arbitrarily pre-select the 1st stop
+        const stopToSelect = stopsFromTransport[0];
         setStopId(stopToSelect.stop_id);
         setStop(stopToSelect.name)
     }
