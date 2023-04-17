@@ -24,7 +24,7 @@ function TransportSelector() {
         if(apiKey && mode && stopId) {
             requestStopDeparturePredictions();
         }
-    }, [stopId, mode])
+    }, [stopId, mode, apiKey])
 
     function setUpStops(typeOfTransport){
         let stopsFromTransport;
