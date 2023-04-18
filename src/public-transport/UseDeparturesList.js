@@ -10,9 +10,8 @@ const BUS_STOPS = [{stop_id: "3081", name: "Johnsonville Mall"}, {stop_id: "3252
 export const useDeparturesList = () => {
     const [apiKey, setApiKey] = useState("");
     const [mode, setMode] = useState("");
-    const [stop, setStop] = useState("");
+    const [stop, setStop] = useState({});
     const [stops, setStops] = useState([]);
-    const [stopId, setStopId] = useState("");
 
     if(!mode) {
         const defaultMode = MODES[1];
@@ -20,7 +19,7 @@ export const useDeparturesList = () => {
         setUpStops(defaultMode)
     }
 
-    const { isLoading, error, data} = useQuery(['stop-predictions', stopId, mode, apiKey],
+    const { isLoading, error, data} = useQuery(['stop-predictions', stop.stop_id, mode, apiKey],
         fetchStopPredictions , {
             refetchOnMount: false,
             refetchOnWindowFocus: false,
@@ -37,9 +36,8 @@ export const useDeparturesList = () => {
         setStops(stopsFromTransport);
         // arbitrarily pre-select the 1st stop
         const stopToSelect = stopsFromTransport[0];
-        setStopId(stopToSelect.stop_id);
-        setStop(stopToSelect.name)
+        setStop(stopToSelect)
     }
     return {apiKey, setApiKey, mode, setMode, stop, setStop, stops,
-         setStopId, isLoading, error, data, setUpStops};
+          isLoading, error, data, setUpStops};
 };
