@@ -10,7 +10,6 @@ const BUS_STOPS = [{stop_id: "3081", name: "Johnsonville Mall"}, {stop_id: "3252
 
 function TransportSelector() {
 
-    const [departures, setDepartures] = useState();
     const [apiKey, setApiKey] = useState("");
     const [mode, setMode] = useState("");
     const [stop, setStop] = useState("");
@@ -22,12 +21,11 @@ function TransportSelector() {
         setMode(defaultMode)
         setUpStops(defaultMode)
     }
-    const { isLoading, error} = useQuery(['stop-predictions', stopId, mode, apiKey],
+    const { isLoading, error, data} = useQuery(['stop-predictions', stopId, mode, apiKey],
         fetchStopPredictions , {
         refetchOnMount: false,
         refetchOnWindowFocus: false,
         staleTime: 20000,
-        onSuccess: (data) => {setDepartures(data)}
     });
 
 
@@ -56,8 +54,8 @@ function TransportSelector() {
             return <span>Loading......</span>;
         } else if (error) {
             return <span>{`Error: ${error.message}`}</span>;
-        } else if (departures != undefined && departures.length > 0) {
-            return <StopDepartures stopDepartures={departures}/>;
+        } else if (data != undefined && data.length > 0) {
+            return <StopDepartures stopDepartures={data}/>;
         }
     }
 
