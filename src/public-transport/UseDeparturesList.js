@@ -26,6 +26,16 @@ export const useDeparturesList = () => {
             staleTime: 20000,
         });
 
+
+    function setStopFromId(stopId) {
+        const findFunction = (oneStop) => oneStop.stop_id === stopId;
+        let stop = TRAIN_STOPS.find(findFunction);
+        if (!stop) {
+            stop = BUS_STOPS.find(findFunction);
+        }
+        setStop(stop);
+    }
+
     function setUpStops(typeOfTransport){
         let stopsFromTransport;
         if (typeOfTransport === "Train") {
@@ -39,5 +49,5 @@ export const useDeparturesList = () => {
         setStop(stopToSelect)
     }
     return {apiKey, setApiKey, mode, setMode, stop, setStop, stops,
-          isLoading, error, data, setUpStops};
+          isLoading, error, data, setUpStops, setStopFromId};
 };

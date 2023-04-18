@@ -4,15 +4,13 @@ import {MODES} from "./UseDeparturesList";
 
 function TransportSelector() {
 
-    const {apiKey, setApiKey, mode, setMode, stop, setStop, stops, isLoading,
-        error, data, setUpStops} = useDeparturesList();
+    const {apiKey, setApiKey, mode, setMode, stop, stops, isLoading,
+        error, data, setUpStops, setStopFromId} = useDeparturesList();
 
     function setStopFromEvent(event) {
         const selectedIndex = event.target.options.selectedIndex;
         const stopIdFromEvent= event.target.options[selectedIndex].getAttribute('data-key');
-        const stopName = event.target.value;
-        const selectedStop = {stop_id: stopIdFromEvent, name: stopName};
-        setStop(selectedStop)
+        setStopFromId(stopIdFromEvent);
     }
 
     function showQueryResults() {
@@ -64,7 +62,6 @@ function TransportSelector() {
                     id="stop"
                     value={stop.name}
                     onChange={(e) =>{
-                        setStop(e.target.value)
                         setStopFromEvent(e);
                 }}
                 >
