@@ -7,6 +7,11 @@ const TRAIN_STOPS = [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", 
 const BUS_STOPS = [{stop_id: "3081", name: "Johnsonville Mall"}, {stop_id: "3252", name: "BP Johnsonville"},
     {stop_id: "5012", name: "Lambton Central - Stop A"}, {stop_id: "5016", name: "Wellington Station - Stop E"}]
 
+/**
+ * This file and function is an attempt to use clean software architecture as suggested by LINZ team tech leads.
+ * Clean Architecture is a software development pattern that emphasises the separation of business logic from the infrastructure and frameworks
+ * @returns {{mode: string, isLoading: boolean, apiKey: string, stop: {}, setStop: (value: (((prevState: {}) => {}) | {})) => void, data: unknown, setStopFromId: setStopFromId, setMode: (value: (((prevState: string) => string) | string)) => void, setApiKey: (value: (((prevState: string) => string) | string)) => void, setUpStops: setUpStops, stops: *[], error: unknown}}
+ */
 export const useDeparturesList = () => {
     const [apiKey, setApiKey] = useState("");
     const [mode, setMode] = useState("");
