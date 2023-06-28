@@ -12,15 +12,17 @@ const StopDepartures = (props) => {
                     <th>Expected Departure</th>
                 </tr>
                 </thead>
-                {props.stopDepartures?.map((departure) => {
+                <tbody>
+                {props.stopDepartures?.map((departure, index) => {
                     return (
-                    <tr>
+                    <tr key={index}>
                         <td>{departure.service_id}</td>
                         <td>{departure.status}</td>
                         <td>{departure.destination.name}</td>
                         <td>{TIME_FORMATTER(departure.departure.expected)}</td>
                     </tr>
                 )})}
+                </tbody>
             </table>
         </div>
     );
