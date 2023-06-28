@@ -4,12 +4,14 @@ const StopDepartures = (props) => {
     return (
         <div>
             <table>
+                <thead>
                 <tr>
                     <th>Service ID</th>
                     <th>Status</th>
                     <th>Destination</th>
                     <th>Expected Departure</th>
                 </tr>
+                </thead>
                 {props.stopDepartures?.map((departure) => {
                     return (
                     <tr>
