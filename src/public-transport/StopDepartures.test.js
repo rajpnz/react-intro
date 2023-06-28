@@ -9,7 +9,7 @@ test('stop departures can be rendered with no departures', () => {
     expect(screen.getByText("Destination")).toBeInTheDocument();
     expect(screen.getByText("Expected Departure")).toBeInTheDocument();
     // below outputs the dom to the console
-    screen.debug()
+    // screen.debug()
 })
 
 
