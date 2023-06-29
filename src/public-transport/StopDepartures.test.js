@@ -22,15 +22,12 @@ test('stop departures are rendered', () => {
     render(<StopDepartures stopDepartures={departures}/>)
 
     // assert
-    expect(screen.getByText("Service ID")).toBeInTheDocument();
-    expect(screen.getByText("Status")).toBeInTheDocument();
-    expect(screen.getByText("Destination")).toBeInTheDocument();
-    expect(screen.getByText("Expected Departure")).toBeInTheDocument();
-    const cells = screen.getAllByRole('cell');
-
-    expect(cells[0]).toHaveTextContent("454");
-    expect(cells[1]).toHaveTextContent("ON_TIME");
-    expect(cells[2]).toHaveTextContent("Johnsonville");
-    expect(cells[3]).toHaveTextContent("8:49 am");
-
+    const headerRow = screen.getAllByRole("row", {
+        name: /Service ID Status Destination Expected Departure/i
+    });
+    expect(headerRow.length).toBe(1)
+    const tableRow = screen.getAllByRole("row", {
+        name: /454 ON_TIME Johnsonville 8:49 am/i
+    });
+    expect(tableRow.length).toBe(1)
 })
