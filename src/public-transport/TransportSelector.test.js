@@ -8,16 +8,16 @@ jest.mock('./UseDeparturesList', () => ({
     useDeparturesList: () =>{
         return {
             apiKey: 'xyz',
-            setApiKey: (apiKey) => {},
-            mode: "Train", setMode: (newMode) => {},
+            setApiKey: () => {},
+            mode: "Train", setMode: () => {},
             stop: {stop_id: "JOHN", name: "Johnsonville"},
-            setStop: (newStop) => {},
+            setStop: () => {},
             stops: [],
         isLoading: true,
             error: true,
             data: [],
-            setUpStops: (typeOfTransport) => {},
-            setStopFromId: (id) => {}
+            setUpStops: () => {},
+            setStopFromId: () => {}
         }},
     MODES: ["Train", "Bus"],
 }));
@@ -28,11 +28,10 @@ describe('Transport selector test', () =>{
     });
 
     test('can be rendered', () => {
-        const {container} = render(<TransportSelector />)
+        render(<TransportSelector />)
         screen.debug();
     })
     test('renders correctly when loading data', () => {
         // TODO
-
     })
 })
