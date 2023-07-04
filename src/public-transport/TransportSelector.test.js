@@ -9,10 +9,11 @@ jest.mock('./UseDeparturesList', () => ({
         return {
             apiKey: 'xyz',
             setApiKey: () => {},
-            mode: "Train", setMode: () => {},
+            mode: "Train",
+            setMode: () => {},
             stop: {stop_id: "JOHN", name: "Johnsonville"},
             setStop: () => {},
-            stops: [],
+            stops: [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", name: "Raroa"}, {stop_id: "WELL", name: "Wellington"}],
         isLoading: true,
             error: true,
             data: [],
@@ -29,6 +30,22 @@ describe('Transport selector test', () =>{
 
     test('can be rendered', () => {
         render(<TransportSelector />)
+
+        // assert that the selected mode is Train
+        screen.getByDisplayValue('Train');
+
+        // assert that all the mode options are available
+        expect(screen.getByText("Train")).toBeInTheDocument();
+        expect(screen.getByText("Bus")).toBeInTheDocument();
+
+        // assert that the selected stop is Johnsonville
+        screen.getByDisplayValue('Johnsonville - (JOHN)');
+
+        // assert all the stop options are available
+        expect(screen.getByText("Johnsonville - (JOHN)")).toBeInTheDocument();
+        expect(screen.getByText("Raroa - (RARO)")).toBeInTheDocument();
+        expect(screen.getByText("Wellington - (WELL)")).toBeInTheDocument();
+
         screen.debug();
     })
     test('renders correctly when loading data', () => {
