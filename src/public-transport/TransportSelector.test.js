@@ -15,7 +15,7 @@ jest.mock('./UseDeparturesList', () => ({
             setStop: () => {},
             stops: [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", name: "Raroa"}, {stop_id: "WELL", name: "Wellington"}],
         isLoading: true,
-            error: true,
+            error: false,
             data: [],
             setUpStops: () => {},
             setStopFromId: () => {}
@@ -23,7 +23,7 @@ jest.mock('./UseDeparturesList', () => ({
     MODES: ["Train", "Bus"],
 }));
 
-describe('Transport selector test', () =>{
+describe('renders correctly when loading data', () =>{
     afterAll(() => {
         jest.resetAllMocks();
     });
@@ -46,9 +46,12 @@ describe('Transport selector test', () =>{
         expect(screen.getByText("Raroa - (RARO)")).toBeInTheDocument();
         expect(screen.getByText("Wellington - (WELL)")).toBeInTheDocument();
 
-        screen.debug();
+        // assert that isLoading text is displayed
+        screen.getByText('Loading......');
+
+        // screen.debug();
     })
-    test('renders correctly when loading data', () => {
+    test('renders correctly', () => {
         // TODO
     })
 })
