@@ -1,34 +1,51 @@
 import {render, screen} from "@testing-library/react";
 import * as React from "react";
 import TransportSelector from "./TransportSelector";
+import {useDeparturesList} from './UseDeparturesList'
+// https://stackoverflow.com/questions/43500235/jest-mock-a-function-called-inside-a-react-component
+jest.mock('./UseDeparturesList', () => ({ useDeparturesList: jest.fn(), MODES: ["Train", "Bus"]}))
 
-const {useDeparturesList} = require('./UseDeparturesList')
-// see https://stackoverflow.com/questions/66288290/jest-mock-nested-function-from-another-file
-jest.mock('./UseDeparturesList', () => ({
-    useDeparturesList: () =>{
-        return {
-            apiKey: 'xyz',
-            setApiKey: () => {},
-            mode: "Train",
-            setMode: () => {},
-            stop: {stop_id: "JOHN", name: "Johnsonville"},
-            setStop: () => {},
-            stops: [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", name: "Raroa"}, {stop_id: "WELL", name: "Wellington"}],
+const mockUseDeparturesListLoading = () => {
+    return {
+        apiKey: 'xyz',
+        setApiKey: () => {},
+        mode: "Train",
+        setMode: () => {},
+        stop: {stop_id: "JOHN", name: "Johnsonville"},
+        setStop: () => {},
+        stops: [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", name: "Raroa"}, {stop_id: "WELL", name: "Wellington"}],
         isLoading: true,
-            error: false,
-            data: [],
-            setUpStops: () => {},
-            setStopFromId: () => {}
-        }},
-    MODES: ["Train", "Bus"],
-}));
+        error: undefined,
+        data: [],
+        setUpStops: () => {},
+        setStopFromId: () => {}
+    }
+};
+
+const mockUseDeparturesListWithError = () => {
+    return {
+        apiKey: 'xyz',
+        setApiKey: () => {},
+        mode: "Train",
+        setMode: () => {},
+        stop: {stop_id: "JOHN", name: "Johnsonville"},
+        setStop: () => {},
+        stops: [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", name: "Raroa"}, {stop_id: "WELL", name: "Wellington"}],
+        isLoading: false,
+        error: { message: "Unable to fetch stop predictions" },
+        data: [],
+        setUpStops: () => {},
+        setStopFromId: () => {}
+    }
+};
 
 describe('renders correctly when loading data', () =>{
-    afterAll(() => {
+    afterEach(() => {
         jest.resetAllMocks();
     });
 
     test('can be rendered', () => {
+        useDeparturesList.mockImplementation(mockUseDeparturesListLoading)
         render(<TransportSelector />)
 
         // assert that the selected mode is Train
@@ -51,7 +68,10 @@ describe('renders correctly when loading data', () =>{
 
         // screen.debug();
     })
-    test('renders correctly', () => {
-        // TODO
+    test('renders correctly when there is an error', () => {
+        useDeparturesList.mockImplementation(mockUseDeparturesListWithError)
+        render(<TransportSelector />)
+        // assert that error is displayed
+        screen.getByText('Error: Unable to fetch stop predictions');
     })
 })
