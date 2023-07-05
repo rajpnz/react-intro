@@ -5,47 +5,14 @@ import {useDeparturesList} from './UseDeparturesList'
 // https://stackoverflow.com/questions/43500235/jest-mock-a-function-called-inside-a-react-component
 jest.mock('./UseDeparturesList', () => ({ useDeparturesList: jest.fn(), MODES: ["Train", "Bus"]}))
 
-const mockUseDeparturesListLoading = () => {
-    return {
-        apiKey: 'xyz',
-        setApiKey: () => {},
-        mode: "Train",
-        setMode: () => {},
-        stop: {stop_id: "JOHN", name: "Johnsonville"},
-        setStop: () => {},
-        stops: [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", name: "Raroa"}, {stop_id: "WELL", name: "Wellington"}],
-        isLoading: true,
-        error: undefined,
-        data: [],
-        setUpStops: () => {},
-        setStopFromId: () => {}
-    }
-};
-
-const mockUseDeparturesListWithError = () => {
-    return {
-        apiKey: 'xyz',
-        setApiKey: () => {},
-        mode: "Train",
-        setMode: () => {},
-        stop: {stop_id: "JOHN", name: "Johnsonville"},
-        setStop: () => {},
-        stops: [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", name: "Raroa"}, {stop_id: "WELL", name: "Wellington"}],
-        isLoading: false,
-        error: { message: "Unable to fetch stop predictions" },
-        data: [],
-        setUpStops: () => {},
-        setStopFromId: () => {}
-    }
-};
-
 describe('renders correctly when loading data', () =>{
+
     afterEach(() => {
         jest.resetAllMocks();
     });
 
     test('can be rendered', () => {
-        useDeparturesList.mockImplementation(mockUseDeparturesListLoading)
+        useDeparturesList.mockImplementation(mockUseDeparturesList(true))
         render(<TransportSelector />)
 
         // assert that the selected mode is Train
@@ -69,9 +36,36 @@ describe('renders correctly when loading data', () =>{
         // screen.debug();
     })
     test('renders correctly when there is an error', () => {
-        useDeparturesList.mockImplementation(mockUseDeparturesListWithError)
+        useDeparturesList.mockImplementation(mockUseDeparturesList(false, 'Unable to fetch stop predictions'))
         render(<TransportSelector />)
         // assert that error is displayed
         screen.getByText('Error: Unable to fetch stop predictions');
     })
+
+    function mockUseDeparturesList(isLoading = false, errorMessage = undefined) {
+        return function () {
+            return {
+                apiKey: 'xyz',
+                setApiKey: () => {
+                },
+                mode: "Train",
+                setMode: () => {
+                },
+                stop: {stop_id: "JOHN", name: "Johnsonville"},
+                setStop: () => {
+                },
+                stops: [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", name: "Raroa"}, {
+                    stop_id: "WELL",
+                    name: "Wellington"
+                }],
+                isLoading: isLoading,
+                error: errorMessage === undefined ? undefined : {message: errorMessage},
+                data: [],
+                setUpStops: () => {
+                },
+                setStopFromId: () => {
+                }
+            };
+        }
+    }
 })
