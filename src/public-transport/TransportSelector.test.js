@@ -1,4 +1,5 @@
 import {render, screen} from "@testing-library/react";
+import userEvent from '@testing-library/user-event'
 import * as React from "react";
 import TransportSelector from "./TransportSelector";
 import {useDeparturesList} from './UseDeparturesList'
@@ -6,6 +7,8 @@ import {useDeparturesList} from './UseDeparturesList'
 jest.mock('./UseDeparturesList', () => ({ useDeparturesList: jest.fn(), MODES: ["Train", "Bus"]}))
 
 describe('renders correctly when loading data', () =>{
+
+    const mockSetApiKey = jest.fn();
 
     afterEach(() => {
         jest.resetAllMocks();
@@ -43,7 +46,11 @@ describe('renders correctly when loading data', () =>{
     })
 
 
-    test('behaves correctly when an API key is entered', () => {
+    test('behaves correctly when an API key is entered', async () => {
+        useDeparturesList.mockImplementation(mockUseDeparturesList(true));
+        render(<TransportSelector />)
+        await userEvent.type(screen.getByLabelText(/Metlink API Key/i), 'key');
+        expect(mockSetApiKey.mock.calls).toEqual([['k'], ['e'], ['y']]);
     })
 
     test('behaves correctly when mode is selected', () => {
@@ -58,9 +65,8 @@ describe('renders correctly when loading data', () =>{
     function mockUseDeparturesList(isLoading = false, errorMessage = undefined) {
         return function () {
             return {
-                apiKey: 'xyz',
-                setApiKey: () => {
-                },
+                apiKey: '',
+                setApiKey: mockSetApiKey,
                 mode: "Train",
                 setMode: () => {
                 },
