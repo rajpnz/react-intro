@@ -42,6 +42,19 @@ describe('renders correctly when loading data', () =>{
         screen.getByText('Error: Unable to fetch stop predictions');
     })
 
+
+    test('behaves correctly when an API key is entered', () => {
+    })
+
+    test('behaves correctly when mode is selected', () => {
+    })
+
+    test('behaves correctly when stop is selected', () => {
+    })
+
+    test('displays departures for a stop', () => {
+    })
+
     function mockUseDeparturesList(isLoading = false, errorMessage = undefined) {
         return function () {
             return {
