@@ -11,6 +11,7 @@ describe('renders correctly when loading data', () =>{
     const mockSetApiKey = jest.fn();
     const mockSetMode = jest.fn();
     const mockSetStops = jest.fn();
+    const mockSetStopFromId = jest.fn();
 
     afterEach(() => {
         jest.resetAllMocks();
@@ -67,7 +68,12 @@ describe('renders correctly when loading data', () =>{
     })
 
     test('behaves correctly when stop is selected', () => {
-
+        useDeparturesList.mockImplementation(mockUseDeparturesList(false))
+        render(<TransportSelector />)
+        userEvent.selectOptions(
+            screen.getAllByRole('combobox')[1], 'Wellington - (WELL)'
+        );
+        expect(mockSetStopFromId).toBeCalledWith('WELL')
     })
 
     test('displays departures for a stop', () => {
@@ -91,8 +97,7 @@ describe('renders correctly when loading data', () =>{
                 error: errorMessage === undefined ? undefined : {message: errorMessage},
                 data: [],
                 setUpStops: mockSetStops,
-                setStopFromId: () => {
-                }
+                setStopFromId: mockSetStopFromId
             };
         }
     }
