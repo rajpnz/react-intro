@@ -9,6 +9,8 @@ jest.mock('./UseDeparturesList', () => ({ useDeparturesList: jest.fn(), MODES: [
 describe('renders correctly when loading data', () =>{
 
     const mockSetApiKey = jest.fn();
+    const mockSetMode = jest.fn();
+    const mockSetStops = jest.fn();
 
     afterEach(() => {
         jest.resetAllMocks();
@@ -54,9 +56,18 @@ describe('renders correctly when loading data', () =>{
     })
 
     test('behaves correctly when mode is selected', () => {
+        useDeparturesList.mockImplementation(mockUseDeparturesList(true))
+        render(<TransportSelector />)
+        userEvent.selectOptions(
+            screen.getAllByRole('combobox')[0], 'Bus'
+        );
+        expect(mockSetMode).toBeCalledWith('Bus')
+        expect(mockSetStops).toBeCalledWith('Bus')
+
     })
 
     test('behaves correctly when stop is selected', () => {
+
     })
 
     test('displays departures for a stop', () => {
@@ -68,8 +79,7 @@ describe('renders correctly when loading data', () =>{
                 apiKey: '',
                 setApiKey: mockSetApiKey,
                 mode: "Train",
-                setMode: () => {
-                },
+                setMode: mockSetMode,
                 stop: {stop_id: "JOHN", name: "Johnsonville"},
                 setStop: () => {
                 },
@@ -80,8 +90,7 @@ describe('renders correctly when loading data', () =>{
                 isLoading: isLoading,
                 error: errorMessage === undefined ? undefined : {message: errorMessage},
                 data: [],
-                setUpStops: () => {
-                },
+                setUpStops: mockSetStops,
                 setStopFromId: () => {
                 }
             };
