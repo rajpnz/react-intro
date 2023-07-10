@@ -16,7 +16,7 @@ describe('renders correctly when loading data', () =>{
         jest.resetAllMocks();
     });
 
-    test('can be rendered', () => {
+    test('can be rendered when departures are loading', () => {
         useDeparturesList.mockImplementation(mockUseDeparturesList(true))
         render(<TransportSelector />)
 
@@ -49,14 +49,14 @@ describe('renders correctly when loading data', () =>{
 
 
     test('behaves correctly when an API key is entered', async () => {
-        useDeparturesList.mockImplementation(mockUseDeparturesList(true));
+        useDeparturesList.mockImplementation(mockUseDeparturesList(false));
         render(<TransportSelector />)
         await userEvent.type(screen.getByLabelText(/Metlink API Key/i), 'key');
         expect(mockSetApiKey.mock.calls).toEqual([['k'], ['e'], ['y']]);
     })
 
     test('behaves correctly when mode is selected', () => {
-        useDeparturesList.mockImplementation(mockUseDeparturesList(true))
+        useDeparturesList.mockImplementation(mockUseDeparturesList(false))
         render(<TransportSelector />)
         userEvent.selectOptions(
             screen.getAllByRole('combobox')[0], 'Bus'
