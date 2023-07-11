@@ -91,9 +91,7 @@ describe('renders correctly when loading data', () =>{
         expect(tableRow.length).toBe(1)
     })
 
-    function mockUseDeparturesList(isLoading = false, errorMessage = undefined, departures = []) {
-        return function () {
-            return {
+    const mockUseDeparturesList = (isLoading = false, errorMessage = undefined, departures = []) => () => ({
                 apiKey: '',
                 setApiKey: mockSetApiKey,
                 mode: "Train",
@@ -110,7 +108,5 @@ describe('renders correctly when loading data', () =>{
                 data: departures,
                 setUpStops: mockSetStops,
                 setStopFromId: mockSetStopFromId
-            };
-        }
-    }
+            })
 })
