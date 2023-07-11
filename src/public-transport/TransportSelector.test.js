@@ -109,4 +109,20 @@ describe('renders correctly when loading data', () =>{
         expect(tableRow.length).toBe(1)
     })
 
+    test('a user can change the mode, then the stop and departure list is updated', () => {
+        // this test has been written to follow Kent C Dodds approach of testing the same way in which a user
+        // would interact with the system.
+        const departures = [{service_id: '454', status: 'ON_TIME',
+            destination: {name: 'Johnsonville'}, departure: {expected: '2023-06-28T20:49:32+0000'}}];
+        useDeparturesList.mockImplementation(mockUseDeparturesList(false, undefined, departures))
+        render(<TransportSelector />)
+
+        //assert the list is correct.
+
+        // change the mocked departure list to return a new value
+        //select a new stop
+
+        //assert the list has updated and is correct.
+    })
+
 })
