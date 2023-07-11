@@ -12,6 +12,24 @@ describe('renders correctly when loading data', () =>{
     const mockSetMode = jest.fn();
     const mockSetStops = jest.fn();
     const mockSetStopFromId = jest.fn();
+    const mockUseDeparturesList = (isLoading = false, errorMessage = undefined, departures = []) => () => ({
+        apiKey: '',
+        setApiKey: mockSetApiKey,
+        mode: "Train",
+        setMode: mockSetMode,
+        stop: {stop_id: "JOHN", name: "Johnsonville"},
+        setStop: () => {
+        },
+        stops: [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", name: "Raroa"}, {
+            stop_id: "WELL",
+            name: "Wellington"
+        }],
+        isLoading: isLoading,
+        error: errorMessage === undefined ? undefined : {message: errorMessage},
+        data: departures,
+        setUpStops: mockSetStops,
+        setStopFromId: mockSetStopFromId
+    })
 
     afterEach(() => {
         jest.resetAllMocks();
@@ -91,22 +109,4 @@ describe('renders correctly when loading data', () =>{
         expect(tableRow.length).toBe(1)
     })
 
-    const mockUseDeparturesList = (isLoading = false, errorMessage = undefined, departures = []) => () => ({
-                apiKey: '',
-                setApiKey: mockSetApiKey,
-                mode: "Train",
-                setMode: mockSetMode,
-                stop: {stop_id: "JOHN", name: "Johnsonville"},
-                setStop: () => {
-                },
-                stops: [{stop_id: "JOHN", name: "Johnsonville"}, {stop_id: "RARO", name: "Raroa"}, {
-                    stop_id: "WELL",
-                    name: "Wellington"
-                }],
-                isLoading: isLoading,
-                error: errorMessage === undefined ? undefined : {message: errorMessage},
-                data: departures,
-                setUpStops: mockSetStops,
-                setStopFromId: mockSetStopFromId
-            })
 })
