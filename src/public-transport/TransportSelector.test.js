@@ -76,10 +76,22 @@ describe('renders correctly when loading data', () =>{
         expect(mockSetStopFromId).toBeCalledWith('WELL')
     })
 
-    test('displays departures for a stop', () => {
+    test('displays departures', () => {
+        const departures = [{service_id: '454', status: 'ON_TIME',
+            destination: {name: 'Johnsonville'}, departure: {expected: '2023-06-28T20:49:32+0000'}}];
+        useDeparturesList.mockImplementation(mockUseDeparturesList(false, undefined, departures))
+        render(<TransportSelector />)
+        const headerRow = screen.getAllByRole("row", {
+            name: /Service ID Status Destination Expected Departure/i
+        });
+        expect(headerRow.length).toBe(1)
+        const tableRow = screen.getAllByRole("row", {
+            name: /454 ON_TIME Johnsonville 8:49 am/i
+        });
+        expect(tableRow.length).toBe(1)
     })
 
-    function mockUseDeparturesList(isLoading = false, errorMessage = undefined) {
+    function mockUseDeparturesList(isLoading = false, errorMessage = undefined, departures = []) {
         return function () {
             return {
                 apiKey: '',
@@ -95,7 +107,7 @@ describe('renders correctly when loading data', () =>{
                 }],
                 isLoading: isLoading,
                 error: errorMessage === undefined ? undefined : {message: errorMessage},
-                data: [],
+                data: departures,
                 setUpStops: mockSetStops,
                 setStopFromId: mockSetStopFromId
             };
